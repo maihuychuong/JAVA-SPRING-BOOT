@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<h1>Danh sách các chức năng</h1>
+<ul>
+    <li><a th:href="@{/groupPeopleByCity}">Liệt kê thành phố và danh sách người sống ở đó</a></li>
+    <li><a th:href="@{/groupJobByCount}">Thống kê nghề nghiệp và số lượng người làm</a></li>
+    <li><a th:href="@{/aboveAverageSalary}">Danh sách người có lương trên trung bình</a></li>
+    <li><a th:href="@{/longestName}">Người có tên dài nhất</a></li>
+</ul>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

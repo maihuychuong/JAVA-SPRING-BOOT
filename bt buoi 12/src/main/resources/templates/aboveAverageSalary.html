@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách người có lương trên trung bình</title>
+</head>
+<body>
+<h1>Danh sách người có lương trên trung bình</h1>
+<p><strong>Mức lương trung bình:</strong> <span th:text="${averageSalary}"></span></p>
+<table border="1">
+    <tr>
+        <th>Họ tên</th>
+        <th>Nghề nghiệp</th>
+        <th>Thành phố</th>
+        <th>Lương</th>
+    </tr>
+    <tr th:each="person : ${aboveAverage}">
+        <td th:text="${person.fullname}"></td>
+        <td th:text="${person.job}"></td>
+        <td th:text="${person.city}"></td>
+        <td th:text="${person.salary}"></td>
+    </tr>
+</table>
+</body>
+</html>
