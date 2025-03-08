@@ -48,7 +48,7 @@ public class ProductController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
-        return "products";
+        return "index";
     }
 
 
@@ -59,6 +59,6 @@ public class ProductController {
             return "redirect:/products";
         }
         model.addAttribute("product", product.get());
-        return "product-detail";
+        return "product";
     }
 }
