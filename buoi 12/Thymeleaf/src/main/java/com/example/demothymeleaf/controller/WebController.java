@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.demothymeleaf.controller;
 
-import com.example.demo.model.PageResponese;
-import com.example.demo.model.Person;
+import com.example.demothymeleaf.model.PageResponse;
+import com.example.demothymeleaf.model.Person;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 @Controller
 public class WebController {
     private List<Person> people = new ArrayList<>();
 
-    public WebController(){
+    public WebController() {
         Faker faker = new Faker();
         Random rd = new Random();
-        for (int i = 0; i < 55; i++){
+        for (int i = 0; i < 55; i++) {
             Person person = new Person(
                     i + 1,
                     faker.name().fullName(),
@@ -32,10 +31,14 @@ public class WebController {
         }
     }
 
-    @GetMapping("/") // http://localhost:8080
-    public String getHome(Model model, @RequestParam(required = false) String keyword,  @RequestParam(required = false, defaultValue = "1") int page){
+    // http://localhost:8080
+    // http://localhost:8080?keyword=Nguyen&page=1
+    @GetMapping("/")
+    public String getHome(Model model,
+                          @RequestParam(required = false) String keyword,
+                          @RequestParam(required = false, defaultValue = "1") int page) {
         List<Person> peopleFound = new ArrayList<>();
-        if(keyword != null){
+        if (keyword != null) {
             peopleFound = people.stream()
                     .filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase()))
                     .toList();
@@ -43,8 +46,8 @@ public class WebController {
             peopleFound = people;
         }
 
-        PageResponese<Person> pageResponese = new PageResponese<>(peopleFound, 10, page);
-        model.addAttribute("pageResponese", pageResponese);
+        PageResponse<Person> pageResponse = new PageResponse<>(peopleFound, 10, page);
+        model.addAttribute("pageResponse", pageResponse);
         model.addAttribute("people", peopleFound);
         model.addAttribute("person", people.get(0));
 

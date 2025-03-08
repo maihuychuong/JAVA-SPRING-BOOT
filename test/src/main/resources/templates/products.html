@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cửa hàng điện thoại</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Cửa hàng điện thoại</h1>
+</header>
+<!-- Banner tự động chạy -->
+<div class="banner-slider">
+    <img class="banner-img" src="https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2021/11/Cover-10.jpg" alt="Banner 1">
+    <img class="banner-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh_uXWLu8e1hRbPlJEX_3FgZKQLtKBtq_TYQ&s" alt="Banner 2">
+    <img class="banner-img" src="https://cdn.tgdd.vn/hoi-dap/1355217/banner-tgdd-800x300.jpg" alt="Banner 3">
+    <img class="banner-img" src="https://thietkehaithanh.com/wp-content/uploads/2019/06/huong-dan-thiet-ke-banner-dien-thoai-bang-photoshop-711x400.jpg" alt="Banner 4">
+    <img class="banner-img" src="https://bizweb.dktcdn.net/100/116/615/articles/banner-5.png?v=1642618492867" alt="Banner 5">
+</div>
+
+<h2>Danh sách sản phẩm</h2>
+
+<!-- Thanh tìm kiếm -->
+<form method="get" action="/products" class="search-form">
+    <input type="text" name="keyword" placeholder="🔍 Tìm kiếm sản phẩm..." th:value="${keyword}">
+    <button type="submit">Tìm kiếm</button>
+</form>
+
+<!-- Hiển thị nếu không có sản phẩm -->
+<p th:if="${#lists.isEmpty(products)}" class="no-product">Không tìm thấy sản phẩm nào.</p>
+
+<!-- Danh sách sản phẩm dạng Grid -->
+<div class="product-grid" th:if="${not #lists.isEmpty(products)}">
+    <div class="product-card" th:each="product : ${products}">
+        <img th:src="${product.thumbnail}" class="product-image" alt="Ảnh sản phẩm">
+        <h3 class="product-name" th:text="${product.name}"></h3>
+
+        <div class="product-prices">
+    <span th:if="${product.priceDiscount > 0}" class="price-original"
+          th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+            <span class="price-discounted"
+                  th:text="${#numbers.formatDecimal(product.price - (product.price * product.priceDiscount / 100), 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+            <span th:if="${product.priceDiscount > 0}" class="discount"
+                  th:text="'-' + ${product.priceDiscount} + '%'"></span>
+        </div>
+
+
+        <div class="rating">
+            <span th:text="${product.rating}"></span> ⭐
+        </div>
+
+        <a th:href="@{/products/{id}(id=${product.id})}" class="btn-details">Xem chi tiết</a>
+    </div>
+</div>
+
+<!-- Phân trang -->
+<div class="pagination" th:if="${totalPages > 1}">
+    <a th:if="${currentPage > 1}" th:href="@{/(page=${currentPage - 1}, keyword=${keyword})}" class="page-link">«</a>
+
+    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{/(page=${i}, keyword=${keyword})}" th:text="${i}"
+               th:class="${i == currentPage} ? 'page-link active' : 'page-link'"></a>
+        </span>
+
+    <a th:if="${currentPage < totalPages}" th:href="@{/(page=${currentPage + 1}, keyword=${keyword})}"
+       class="page-link">»</a>
+</div>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

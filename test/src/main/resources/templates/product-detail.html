@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/css/style1.css}">
+</head>
+<body>
+<div class="product-detail-container">
+    <h2 class="product-title">Chi tiết sản phẩm</h2>
+
+    <div class="product-content">
+        <img th:src="${product.thumbnail}" class="product-image">
+
+        <div class="product-info">
+            <p><strong>Tên sản phẩm:</strong> <span th:text="${product.name}"></span></p>
+            <p><strong>Giá gốc:</strong>
+                <span class="price-original" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+            </p>
+            <p><strong>Giảm giá:</strong>
+                <span class="discount" th:text="'-' + ${product.priceDiscount} + '%'"></span>
+            </p>
+            <p><strong>Giá sau giảm:</strong>
+                <span class="price-discounted"
+                      th:text="${#numbers.formatDecimal(product.price - (product.price * product.priceDiscount / 100), 0, 'POINT', 0, 'COMMA')} + ' VND'">
+                    </span>
+            </p>
+            <p><strong>Đánh giá:</strong> <span th:text="${product.rating}"></span> ⭐</p>
+            <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
+
+            <a href="/" class="btn-back">Quay lại danh sách</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
