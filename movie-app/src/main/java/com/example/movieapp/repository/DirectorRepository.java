@@ -2,6 +2,8 @@ package com.example.movieapp.repository;
 
 import com.example.movieapp.entity.Director;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface DirectorRepository extends JpaRepository<Director, Integer> {
+@Repository
+public interface DirectorRepository extends JpaRepository<Director, Long> {
 }

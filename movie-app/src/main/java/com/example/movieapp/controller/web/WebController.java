@@ -2,9 +2,13 @@ package com.example.movieapp.controller.web;
 
 import com.example.movieapp.entity.Episode;
 import com.example.movieapp.entity.Movie;
+import com.example.movieapp.entity.User;
+import com.example.movieapp.model.dto.UserDTO;
 import com.example.movieapp.model.enums.MovieType;
 import com.example.movieapp.service.EpisodeService;
 import com.example.movieapp.service.MovieService;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,6 +24,7 @@ import java.util.List;
 public class WebController {
     private final MovieService movieService;
     private final EpisodeService episodeService;
+    private final HttpSession session;
 
     @GetMapping("/")
     public String getHomePage(Model model) {
@@ -73,6 +78,10 @@ public class WebController {
         // Lấy danh sách tập phim (movieId, status = true, sort by displayOrder asc)
         List<Episode> episodes = episodeService.findEpisodesByMovieId(id);
         model.addAttribute("episodes", episodes);
+
+        // Kiem tra xem phim co trong danh sach yeu thich cua user khong
+        Boolean isFavorite = true; //favorite.checkFavorite(id);
+        model.addAttribute("isFavorite", isFavorite);
         return "web/chi-tiet-phim";
     }
 
@@ -98,4 +107,20 @@ public class WebController {
         model.addAttribute("episode", episode);
         return "web/xem-phim";
     }
+
+    @GetMapping("/phim-yeu-thich")
+    public String getFavoritePage(Model model) {
+        return "web/phim-yeu-thich";
+    }
+
+    @GetMapping("/dang-nhap")
+    public String showLoginPage() {
+        UserDTO currentUser = (UserDTO) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "web/login";
+        }
+        return "redirect:/";
+    }
+
+
 }

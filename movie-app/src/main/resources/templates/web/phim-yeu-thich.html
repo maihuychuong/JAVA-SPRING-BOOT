@@ -16,26 +16,15 @@
 <section class="py-4 bg-body-tertiary">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <h4>Phim bộ</h4>
+            <h4>Phim yêu thích</h4>
+            <button class="btn btn-danger" id="deleteAllBtn" onclick="deleteAllFavorites()">Xóa tất cả</button>
         </div>
-        <div class="row row-gap-3">
-            <div class="col-2" th:each="movie : ${moviePage}">
-                <th:block th:replace="~{web/fragments/movie::movieItem(${movie})}"></th:block>
-            </div>
+        <div class="row row-gap-3" id="favoriteMoviesContainer">
+
         </div>
 
-        <nav class="mt-4">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
+        <nav class="mt-4" id="paginationContainer">
+
         </nav>
     </div>
 </section>
@@ -44,14 +33,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
-<script th:inline="javascript">
-    let moviePage = [[${moviePage}]];
-    console.log(moviePage)
-
-    let currentPage = [[${currentPage}]];
-    console.log(currentPage)
-</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script th:src="@{/web-assets/js/favorite.js}"></script>
 </body>
 
 </html>

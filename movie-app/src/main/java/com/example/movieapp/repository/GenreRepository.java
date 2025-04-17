@@ -2,6 +2,8 @@ package com.example.movieapp.repository;
 
 import com.example.movieapp.entity.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface GenreRepository extends JpaRepository<Genre, Integer> {
+@Repository
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 }
